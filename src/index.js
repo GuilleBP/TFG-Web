@@ -1,9 +1,8 @@
-import React, { Fragment, Navbar } from "react";
+import React /*{ Fragment, Navbar }*/ from "react";
 import ReactDOM from "react-dom/client";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Routes,
 } from "react-router-dom";
 import { Proyect } from "./components/proyect";

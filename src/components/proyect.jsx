@@ -60,7 +60,7 @@ export function Proyect() {
                             <label>Nombre</label>
                         </div>
                         <div style={buttonStyle}>
-                            <input value={data.name} />
+                            <input value='' />
                         </div>
                     </Modal.Body>
                     <Modal.Footer>

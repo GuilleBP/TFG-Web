@@ -22,8 +22,8 @@ export function Proyect() {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        let token = localStorage.getItem("token");
-        setAuthToken(token);
+        // let token = localStorage.getItem("token");
+        // setAuthToken(token);
         async function fetchData() {
             const consulta = await axios.get("http://localhost:8000/proyect/proyect");
             setRespuestaAPI(consulta.data);

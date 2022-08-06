@@ -8,8 +8,13 @@ import {
 import { Proyect } from "./components/proyect";
 import { Register } from "./components/register";
 import { Login } from "./components/login";
+import { setAuthToken } from './components/setAuthToken';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const token = localStorage.getItem("token");
+ if (token) {
+     setAuthToken(token);
+ }
 root.render(
   <React.StrictMode>
     <Router>

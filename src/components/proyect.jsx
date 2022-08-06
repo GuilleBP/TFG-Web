@@ -4,6 +4,8 @@ import { Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import { FaPlus, FaPencilAlt } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
+import { setAuthToken } from './setAuthToken';
+
 
 export function Proyect() {
     const [url, setUrl] = useState("http://localhost:8000/proyect/proyect");
@@ -20,6 +22,8 @@ export function Proyect() {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
+        let token = localStorage.getItem("token");
+        setAuthToken(token);
         async function fetchData() {
             const consulta = await axios.get("http://localhost:8000/proyect/proyect");
             setRespuestaAPI(consulta.data);

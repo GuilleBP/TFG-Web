@@ -14,7 +14,6 @@ const styles = {
 export function Login() {
 
     function loginApi() {
-        //reqres registered sample user
         const loginPayload = {
             username: document.getElementById('username').value,
             pass: document.getElementById('pass').value
@@ -22,16 +21,10 @@ export function Login() {
 
         axios.post("http://localhost:8000/user/login", loginPayload)
             .then(response => {
-                //get token from response
                 const token = response.data.token;
-
-                //set JWT token to local
                 localStorage.setItem("token", token);
-
-                //set token to axios common header
+                localStorage.setItem("username", loginPayload.username);
                 setAuthToken(token);
-
-                //redirect user to home page
                 window.location.href = '/proyects'
             })
             .catch(err => console.log(err));

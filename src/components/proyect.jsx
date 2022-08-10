@@ -21,9 +21,9 @@ export function Proyect() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    useEffect(() => {
+    useEffect(() => { //localStorage.getItem('username')
         async function fetchData() {
-            const consulta = await axios.get("http://localhost:8000/proyect/proyect").catch((error) => {
+            const consulta = await axios.get(`http://localhost:8000/proyect/proyect/${localStorage.getItem('username')}`).catch((error) => {
                 if (error.response.data === 'Forbidden' || 'Unauthorized') {
                     localStorage.clear()
                     window.location.href = "/"
@@ -82,7 +82,7 @@ export function Proyect() {
 
     const createProyect = async () => {
         async function create() {
-            await axios.post('http://localhost:8000/proyect/createproyect', { data: document.getElementById('name').value })
+            await axios.post(`http://localhost:8000/proyect/createproyect/${localStorage.getItem('username')}`, { data: document.getElementById('name').value })
         }
         create();
     }

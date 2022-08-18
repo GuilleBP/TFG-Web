@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import { FaPlus, FaPencilAlt } from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
-import { setAuthToken } from './setAuthToken';
 import { Link } from "react-router-dom";
 
 
-export function Proyect() {
+export function Keyword() {
     const [respuestaAPI, setRespuestaAPI] = useState({ respuesta: 'KO' });
 
     const buttonStyle = {
         marginLeft: '0.5%'
     }
 
-    const proyectStyle = {
-        marginTop: '0.5%'
-    }
-
-
-    useEffect(() => {
+    useEffect(() => { 
         async function fetchData() {
             const consulta = await axios.get(`http://localhost:8000/proyect/proyect/${localStorage.getItem('username')}`).catch((error) => {
                 if (error.response.data === 'Forbidden' || 'Unauthorized') {
@@ -37,11 +31,11 @@ export function Proyect() {
     const MostrarRespuesta = () => {
         return Object.keys(respuestaAPI).map(key => {
             return (
-                <div id={key} key={key} style={proyectStyle}>
-                    {respuestaAPI[key]['name']}
-                    <Button variant="outline-primary" style={buttonStyle} onClick={() => deleteProyect(respuestaAPI[key]['id'])}><MdDelete /></Button>
-                    <Link to="/keyword"><Button style={buttonStyle} id="cancel">Go</Button></Link>
-                    <input type='hidden' value={respuestaAPI[key]['id']}></input>
+                <div key={key}>
+                    {JSON.stringify(respuestaAPI[key]['name']).replaceAll('"', '')}
+                    <Button variant="outline-primary" style={buttonStyle} onClick={() => deleteProyect(JSON.stringify(respuestaAPI[key]['id']))}><MdDelete /></Button>
+                    <Link to="/keyword"><Button style={buttonStyle} id="cancel">Cancelar</Button></Link>
+                    <input type='hidden' value={JSON.stringify(respuestaAPI[key]['id'])}></input>
                 </div>
             );
         });
@@ -69,7 +63,6 @@ export function Proyect() {
             <input style={buttonStyle} type="text" name="name" id="name" />
             <Button variant="outline-primary" style={buttonStyle} onClick={() => createProyect()}><FaPlus /></Button>
             <MostrarRespuesta />
-
         </div>
     )
 }

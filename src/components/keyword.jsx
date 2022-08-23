@@ -4,8 +4,9 @@ import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { FaPlus } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import { BsFillArrowRightCircleFill } from 'react-icons/bs'
+import { useParams } from "react-router-dom";
 
 export function Keyword() {
     const [respuestaAPI, setRespuestaAPI] = useState({ respuesta: 'KO' });
@@ -14,9 +15,13 @@ export function Keyword() {
         marginLeft: '0.5%'
     }
 
-    useEffect(() => { 
+    const location = useLocation();
+    const { proyectId } = location.state;
+    console.log(proyectId);
+
+    useEffect(() => {
         async function fetchData() {
-            const consulta = await axios.get(`http://localhost:8000/proyect/proyect/${localStorage.getItem('username')}`).catch((error) => {
+            const consulta = await axios.get(`http://localhost:8000/keyword/keyword/${proyectId}`).catch((error) => {
                 if (error.response.data === 'Forbidden' || 'Unauthorized') {
                     localStorage.clear()
                     window.location.href = "/"
@@ -32,10 +37,8 @@ export function Keyword() {
         return Object.keys(respuestaAPI).map(key => {
             return (
                 <div key={key}>
-                    {JSON.stringify(respuestaAPI[key]['name']).replaceAll('"', '')}
-                    <Button variant="outline-primary" style={buttonStyle} onClick={() => deleteProyect(JSON.stringify(respuestaAPI[key]['id']))}><MdDelete /></Button>
-                    <Link to="/keyword"><Button style={buttonStyle} id="cancel">Cancelar</Button></Link>
-                    <input type='hidden' value={JSON.stringify(respuestaAPI[key]['id'])}></input>
+                    {respuestaAPI[key]['word']}
+                    <input type='hidden' value={respuestaAPI[key]['id']}></input>
                 </div>
             );
         });
@@ -43,7 +46,18 @@ export function Keyword() {
 
     const createProyect = async () => {
         async function create() {
-            await axios.post(`http://localhost:8000/proyect/createproyect/${localStorage.getItem('username')}`, { data: document.getElementById('name').value })
+            await axios.post(`http://localhost:8000/keyword/keyword`,
+                {
+                    data: {
+                        proyectId: proyectId,
+                        keyword: {
+                            0: 'hola',
+                            1: 'adios',
+                            2: 'que tal'
+                        },
+                        text: 'hola adios que tal este es mi texto'
+                    }
+                })
         }
         create();
     }
@@ -57,7 +71,7 @@ export function Keyword() {
 
     return (
         <div>
-            <p>Proyectos</p>
+            <p>Palabras clave</p>
             <div>
             </div>
             <input style={buttonStyle} type="text" name="name" id="name" />

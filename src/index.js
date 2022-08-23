@@ -17,10 +17,10 @@ if (token) {
 }
 
 const styles = {
-  height: '100%',
-  width: '100%',
-  marginTop: '5%',
-}
+  height: "100%",
+  width: "100%",
+  marginTop: "5%",
+};
 
 root.render(
   <React.StrictMode>
@@ -39,11 +39,23 @@ root.render(
             element={Auth() ? <Proyect /> : <Login />}
           ></Route>
           <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+          <Route
             path="/register"
             element={Auth() ? <Proyect /> : <Register />}
           ></Route>
+          {/* <Route
+            path="/keyword/:id"
+            element={Auth() ? <Keyword /> : <Login />}
+          ></Route> */}
           <Route
-            path="/keyword"
+            path="/keyword/"
             element={Auth() ? <Keyword /> : <Login />}
           ></Route>
         </Routes>

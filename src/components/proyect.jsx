@@ -6,6 +6,7 @@ import { FaPlus, FaPencilAlt } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 import { setAuthToken } from './setAuthToken';
 import { Link } from "react-router-dom";
+import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 
 
 export function Proyect() {
@@ -40,7 +41,8 @@ export function Proyect() {
                 <div id={key} key={key} style={proyectStyle}>
                     {respuestaAPI[key]['name']}
                     <Button variant="outline-primary" style={buttonStyle} onClick={() => deleteProyect(respuestaAPI[key]['id'])}><MdDelete /></Button>
-                    <Link to="/keyword"><Button style={buttonStyle} id="cancel">Go</Button></Link>
+                    {/* <Link to={`/keyword/${respuestaAPI[key]['id']}`} state= {{ from: respuestaAPI[key]['id'] }} ><Button variant="outline-primary" style={buttonStyle} id="cancel"><BsFillArrowRightCircleFill/></Button></Link> */}
+                    <Link to="/keyword" state= {{ proyectId: respuestaAPI[key]['id'] }} ><Button variant="outline-primary" style={buttonStyle} id="cancel"><BsFillArrowRightCircleFill/></Button></Link>
                     <input type='hidden' value={respuestaAPI[key]['id']}></input>
                 </div>
             );
